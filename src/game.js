@@ -51,10 +51,11 @@
   // ?demo=<plan> autoplays for headless checks: offset per drop as a share of the tier width, "miss" drops off the edge.
   // ?demo=high&n=60 stacks n perfect cakes first; the plan then starts from there. ?swing makes every later cake a balloon cake.
   const DEMO = PARAMS.get("demo");
+  const PACE = (DEMO && Number(PARAMS.get("pace"))) || 1;             // ?pace=2 speeds a demo up, for recordings
   const PLANS = {
     perfect: [0, 0, 0, 0, 0], cut: [0, 0.15, -0.11, 0, 0, 0.075], over: [0, 0.12, "miss"],
     shrink: [0, 0.25, -0.25, 0.25, -0.2, 0.2], tiny: [0, 0.3, -0.3, 0.3, -0.3, 0.3, -0.3, 0.3],
-    swing: [0, 0.12, -0.1, 0], tallover: ["miss"],
+    swing: [0, 0.12, -0.1, 0], tallover: ["miss"], gif: [0, 0, 0.13, 0, 0, -0.1, 0, "miss"],
   };
 
   const store = {
@@ -301,7 +302,7 @@
       const key = this.nextFlavor();
       const y = this.top.surface - this.height(s) * (swing ? 1.35 : 0.55);
       const img = this.add.image(x, y, key).setOrigin(0.5, ANCHOR.bottom).setScale(K * s).setDepth(this.tower.length);
-      const speed = speedFor(this.score) * TIER_W * s;
+      const speed = speedFor(this.score) * TIER_W * s * PACE;
       this.moving = { img, key, s, x, range, v: -this.side * speed, vx: 0, swing, momentum: hard ? 0.5 : MOMENTUM };
       if (swing) {                                    // a pendulum: starts at rest at the far end, fastest over the tower
         this.lastSwing = this.score;

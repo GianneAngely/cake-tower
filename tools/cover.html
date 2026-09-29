@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cake Tower cover</title>
+<link rel="stylesheet" href="../assets/fonts/fredoka.css">
+<style>
+  :root { --ink: #7a4a2e; --pink: #ff9db4; }
+  html, body { margin: 0; overflow: hidden; }
+  #c { position: relative; overflow: hidden; font-family: "Fredoka", sans-serif;
+    background: linear-gradient(180deg, #c9c3ec 0%, #ecc5e0 38%, #fad6cf 70%, #fbe9df 100%); }
+  #c img { position: absolute; display: block; }
+  .shop { left: 50%; transform: translateX(-50%); }
+  .fade { position: absolute; left: 0; right: 0; }
+  h1 { position: absolute; margin: 0; line-height: .9; font-weight: 700; color: var(--pink);
+    paint-order: stroke fill; -webkit-text-stroke: var(--sw) var(--ink); text-shadow: 0 .06em 0 rgba(122, 74, 46, .25); }
+  p { position: absolute; margin: 0; font-weight: 600; color: #fff; paint-order: stroke fill; -webkit-text-stroke: var(--sw2) var(--ink); }
+</style>
+</head>
+<body>
+<div id="c"></div>
+<script>
+// ?w=1600&h=640&layout=banner|cover
+const q = new URLSearchParams(location.search);
+const W = +q.get("w") || 1600, H = +q.get("h") || 640, cover = q.get("layout") === "cover";
+const c = document.getElementById("c");
+Object.assign(c.style, { width: W + "px", height: H + "px" });
+const A = "../assets/";
+const add = (src, css) => { const i = new Image(); i.src = A + src; Object.assign(i.style, css); c.appendChild(i); return i; };
+
+// the shop, as wide as the picture, its top fading into the sky
+const shopW = W * (cover ? 1.06 : 1.02), shopH = shopW * 1536 / 2752;
+const counterY = H * (cover ? 0.9 : 0.86), shopTop = counterY - shopH * 0.8;
+const fadeFrom = cover ? 12 : 30, fadeTo = cover ? 42 : 56;   // % of the picture height
+const shop = add("bg-landscape.jpg", { left: `${(W - shopW) / 2}px`, top: `${shopTop}px`, width: `${shopW}px`, height: `${shopH}px` });
+shop.style.maskImage = shop.style.webkitMaskImage = `linear-gradient(to bottom, transparent ${fadeFrom}%, #000 ${fadeTo}%)`;
+
+// sky decor
+const deco = cover   // [sprite, x, y, width] as fractions of the canvas; all of it in the sky above the shop
+  ? [["sky-cloud-big.webp", 0.6, 0.03, 0.24], ["sky-balloon.webp", 0.88, 0.02, 0.08], ["sky-star.webp", 0.13, 0.05, 0.05], ["sky-star.webp", 0.52, 0.2, 0.03]]
+  : [["sky-cloud-big.webp", 0.03, 0.03, 0.14], ["sky-cloud-small.webp", 0.5, 0.03, 0.085], ["sky-balloon.webp", 0.925, 0.03, 0.045],
+     ["sky-star.webp", 0.3, 0.06, 0.022], ["sky-star.webp", 0.66, 0.14, 0.018], ["sky-birds.webp", 0.4, 0.13, 0.05]];
+for (const [src, x, y, w] of deco) add(src, { left: `${x * W}px`, top: `${y * H}px`, width: `${w * W}px` });
+
+// a stand on the counter and a leaning, wobbly tower of cakes
+const tierW = cover ? W * 0.3 : W * 0.15, tierH = tierW * 644 / 800;
+const cx = cover ? W * 0.3 : W * 0.3;
+const standW = tierW * 1.15, standH = standW * 465 / 919;
+add("stand.webp", { left: `${cx - standW / 2}px`, top: `${counterY - standH}px`, width: `${standW}px`, zIndex: 1 });
+let rim = counterY - standH + 0.28 * standH;                  // where the next tier's bottom rim sits
+const flavors = ["pink", "mint", "lavender", "yellow", "chocolate", "peach", "blue", "vanilla", "pink", "mint", "lavender"];
+const offsets = [0, 0.04, -0.03, 0.05, 0.01, -0.04, 0.03, -0.02, 0.04, -0.01, 0.02];
+const n = cover ? 6 : 8;
+for (let i = 0; i < n; i++) {
+  const s = 1 - i * 0.035, w = tierW * s, h = w * 644 / 800;
+  const top = rim - 0.712 * h;
+  add(`tier-${flavors[i]}.webp`, { left: `${cx + offsets[i] * tierW - w / 2}px`, top: `${top}px`, width: `${w}px`, zIndex: 2 + i });
+  rim = top + 0.232 * h;
+}
+
+// title
+const h1 = document.createElement("h1");
+h1.innerHTML = "Cake<br>Tower";
+const p = document.createElement("p");
+p.textContent = "stack cakes all the way to the moon";
+if (cover) {
+  Object.assign(h1.style, { right: `${W * 0.06}px`, top: `${H * 0.52}px`, fontSize: `${H * 0.2}px`, textAlign: "right", "--sw": `${H * 0.03}px` });
+  Object.assign(p.style, { right: `${W * 0.06}px`, top: `${H * 0.9}px`, fontSize: `${H * 0.05}px`, "--sw2": `${H * 0.014}px` });
+  p.textContent = "stack cakes to the moon";
+} else {
+  Object.assign(h1.style, { left: `${W * 0.46}px`, top: `${H * 0.16}px`, fontSize: `${H * 0.27}px`, "--sw": `${H * 0.035}px` });
+  Object.assign(p.style, { left: `${W * 0.465}px`, top: `${H * 0.73}px`, fontSize: `${H * 0.065}px`, "--sw2": `${H * 0.016}px` });
+}
+h1.style.setProperty("--sw", h1.style["--sw"] || `${H * 0.03}px`);
+c.appendChild(h1);
+c.appendChild(p);
+for (const el of [h1, p]) for (const k of ["--sw", "--sw2"]) { const v = (cover ? { "--sw": H * 0.03, "--sw2": H * 0.014 } : { "--sw": H * 0.035, "--sw2": H * 0.016 })[k]; el.style.setProperty(k, `${v}px`); }
+</script>
+</body>
+</html>
