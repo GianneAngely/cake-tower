@@ -22,7 +22,7 @@
 <script>
 // ?w=1600&h=640&layout=banner|cover
 const q = new URLSearchParams(location.search);
-const W = +q.get("w") || 1600, H = +q.get("h") || 640, cover = q.get("layout") === "cover";
+const W = +q.get("w") || 1600, H = +q.get("h") || 640, cover = q.get("layout") === "cover", embed = q.get("layout") === "embed";
 const c = document.getElementById("c");
 Object.assign(c.style, { width: W + "px", height: H + "px" });
 const A = "../assets/";
@@ -44,7 +44,7 @@ for (const [src, x, y, w] of deco) add(src, { left: `${x * W}px`, top: `${y * H}
 
 // a stand on the counter and a leaning, wobbly tower of cakes
 const tierW = cover ? W * 0.3 : W * 0.15, tierH = tierW * 644 / 800;
-const cx = cover ? W * 0.3 : W * 0.3;
+const cx = embed ? W * 0.17 : W * 0.3;
 const standW = tierW * 1.15, standH = standW * 465 / 919;
 add("stand.webp", { left: `${cx - standW / 2}px`, top: `${counterY - standH}px`, width: `${standW}px`, zIndex: 1 });
 let rim = counterY - standH + 0.28 * standH;                  // where the next tier's bottom rim sits
@@ -63,7 +63,11 @@ const h1 = document.createElement("h1");
 h1.innerHTML = "Cake<br>Tower";
 const p = document.createElement("p");
 p.textContent = "stack cakes all the way to the moon";
-if (cover) {
+if (embed) {
+  h1.innerHTML = "Cake Tower";
+  Object.assign(h1.style, { left: 0, right: 0, top: `${H * 0.1}px`, fontSize: `${H * 0.16}px`, textAlign: "center" });
+  Object.assign(p.style, { left: 0, right: 0, top: `${H * 0.29}px`, fontSize: `${H * 0.045}px`, textAlign: "center" });
+} else if (cover) {
   Object.assign(h1.style, { right: `${W * 0.06}px`, top: `${H * 0.52}px`, fontSize: `${H * 0.2}px`, textAlign: "right", "--sw": `${H * 0.03}px` });
   Object.assign(p.style, { right: `${W * 0.06}px`, top: `${H * 0.9}px`, fontSize: `${H * 0.05}px`, "--sw2": `${H * 0.014}px` });
   p.textContent = "stack cakes to the moon";
@@ -74,7 +78,7 @@ if (cover) {
 h1.style.setProperty("--sw", h1.style["--sw"] || `${H * 0.03}px`);
 c.appendChild(h1);
 c.appendChild(p);
-for (const el of [h1, p]) for (const k of ["--sw", "--sw2"]) { const v = (cover ? { "--sw": H * 0.03, "--sw2": H * 0.014 } : { "--sw": H * 0.035, "--sw2": H * 0.016 })[k]; el.style.setProperty(k, `${v}px`); }
+for (const el of [h1, p]) for (const k of ["--sw", "--sw2"]) { const v = (cover || embed ? { "--sw": H * 0.028, "--sw2": H * 0.012 } : { "--sw": H * 0.035, "--sw2": H * 0.016 })[k]; el.style.setProperty(k, `${v}px`); }
 </script>
 </body>
 </html>
