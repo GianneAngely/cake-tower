@@ -8,7 +8,7 @@ import { join, resolve } from "node:path";
 const [query = "", size = "540x960", wait = "3000", out = "shot.png", exprArg = "", evalOut = ""] = process.argv.slice(2);
 const expr = exprArg.startsWith("@") ? readFileSync(exprArg.slice(1), "utf8") : exprArg;   // @file.js evaluates a file
 const [width, height] = size.split("x").map(Number);
-const url = `file://${resolve(import.meta.dirname, "../index.html")}${query ? `?${query}` : ""}`;
+const url = query.startsWith("http") ? query : `file://${resolve(import.meta.dirname, "../index.html")}${query ? `?${query}` : ""}`;
 const port = 9300 + Math.floor(Math.random() * 500);
 const chrome = spawn("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", [
   "--headless=new", "--hide-scrollbars", "--allow-file-access-from-files", "--autoplay-policy=no-user-gesture-required", `--remote-debugging-port=${port}`,

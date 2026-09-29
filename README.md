@@ -6,7 +6,7 @@ A cozy **cake-stacking browser game**. Drop each sliding cake onto the tower, ke
 
 ## Try it
 
-Play it in the browser on your phone or laptop, portrait or landscape: **VERCEL_URL**
+Play it in the browser on your phone or laptop, portrait or landscape: **[cake-tower-beta.vercel.app](https://cake-tower-beta.vercel.app)**
 
 ## Run locally
 
