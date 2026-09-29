@@ -1,0 +1,8 @@
+# raw Flow sources and work files (large, or not ours to publish)
+art/
+refs/
+mockup/
+audio-preview/
+.vercel/
+.DS_Store
+__pycache__/
