@@ -6,3 +6,5 @@ audio-preview/
 .vercel/
 .DS_Store
 __pycache__/
+.vercel
+.env*
