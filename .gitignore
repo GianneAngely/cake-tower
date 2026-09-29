@@ -8,3 +8,4 @@ audio-preview/
 __pycache__/
 .vercel
 .env*
+itch/

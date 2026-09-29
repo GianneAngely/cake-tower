@@ -47,6 +47,7 @@
   .cta { display: inline-block; margin-top: .75rem; padding: .4rem 1.2rem; background: var(--pink); border: .18rem solid var(--ink); border-radius: 999px;
     font-size: 1.15rem; font-weight: 700; --sw: .28rem; animation: bob 1.2s ease-in-out infinite; }
   @keyframes bob { 50% { transform: translateY(-.25rem); } }
+  .cta.loading { animation: none; background: #f3c9d2; }
 
   #over { top: calc(4.2rem + env(safe-area-inset-top)); }
   @media (orientation: landscape) { #over { left: auto; right: 4%; top: 50%; transform: translateY(-50%); } }
@@ -77,7 +78,7 @@
   <section id="title" class="card">
     <h1 class="stroke">Cake<br>Tower</h1>
     <p>Stack the cakes as high as you can!</p>
-    <div class="cta stroke">Tap to start</div>
+    <div id="start-cta" class="cta stroke loading">Loading…</div>
   </section>
   <section id="over" class="card" hidden>
     <h2 class="stroke">Oops!</h2>

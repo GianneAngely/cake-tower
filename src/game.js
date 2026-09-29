@@ -144,6 +144,7 @@
     constructor() { super("cake"); }
 
     preload() {
+      this.load.on("progress", (v) => { $("start-cta").textContent = `Loading ${Math.round(v * 100)}%`; });
       const url = (file) => (window.CAKE_ASSETS && window.CAKE_ASSETS[file.replace(/\.\w+$/, "")]) || `assets/${file}`;
       for (const f of FLAVORS) this.load.image(f, url(`tier-${f}.webp`));
       this.load.image("stand", url("stand.webp"));
@@ -197,6 +198,8 @@
       this.scale.on("resize", () => this.layout(false));
       this.layout(true);
       hud.title(this.best);
+      $("start-cta").textContent = "Tap to start";
+      $("start-cta").classList.remove("loading");
 
       if (DEMO) {
         CakeAudio.unlock();
