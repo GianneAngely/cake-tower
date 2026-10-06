@@ -563,7 +563,7 @@
         this.game.renderer.snapshotArea(Math.round(r.x), Math.round(r.y), Math.round(r.w), Math.round(r.h), resolve);
       }).then(async (img) => {
         await document.fonts.load('700 88px "Fredoka"');
-        const W = 1080, pad = 56, cap = 250, maxH = 1480;   // tall towers make tall, narrower photos
+        const W = 1080, pad = 56, cap = 300, maxH = 1480;   // tall towers make tall, narrower photos
         let pw = W - pad * 2, ph = Math.round((pw * img.height) / img.width);
         if (ph > maxH) { ph = maxH; pw = Math.round((ph * img.width) / img.height); }
         const px = (W - pw) / 2;
@@ -590,6 +590,9 @@
         g.font = '600 38px "Fredoka"';
         const date = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
         g.fillText(`Cake Tower · ${date}`, W / 2, pad + ph + 190);
+        g.fillStyle = "#c2476a";                      // where to play, so a shared photo leads back to the game
+        g.font = '600 34px "Fredoka"';
+        g.fillText("play at gianneangely.itch.io/cake-tower", W / 2, pad + ph + 248);
         if (this.isNewBest) {                         // pink "New best!" pill in the photo's corner
           g.font = '700 40px "Fredoka"';
           const tw = g.measureText("New best!").width + 56;

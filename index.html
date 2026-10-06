@@ -95,5 +95,8 @@
 <script src="lib/phaser.min.js"></script>
 <script src="src/audio.js"></script>
 <script src="src/game.js"></script>
+<script>   // Vercel Web Analytics, only on the Vercel site (not itch or a local file)
+  if (location.hostname.endsWith("vercel.app")) document.head.appendChild(Object.assign(document.createElement("script"), { defer: true, src: "/_vercel/insights/script.js" }));
+</script>
 </body>
 </html>
