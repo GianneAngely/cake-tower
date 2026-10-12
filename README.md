@@ -5,8 +5,8 @@ A cozy **cake-stacking browser game**. Drop each sliding cake onto the tower, ke
 ![Cake Tower](docs/banner.png)
 
 <p align="center">
-  <a href="https://caketower.vercel.app"><b>🎮 Play it at caketower.vercel.app</b></a><br>
-  <sub>also on <a href="https://gianneangely.itch.io/cake-tower">itch.io</a></sub>
+  <a href="https://gianneangely.itch.io/cake-tower"><b>🎮 Play Cake Tower on itch.io</b></a><br>
+  <sub>free, right in your browser · follow on itch for updates</sub>
 </p>
 
 <p align="center">
