@@ -11,7 +11,7 @@ const [width, height] = size.split("x").map(Number);
 const url = query.startsWith("http") ? query : `file://${resolve(import.meta.dirname, "../index.html")}${query ? `?${query}` : ""}`;
 const port = 9300 + Math.floor(Math.random() * 500);
 const chrome = spawn("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", [
-  "--headless=new", "--hide-scrollbars", "--allow-file-access-from-files", "--autoplay-policy=no-user-gesture-required", `--remote-debugging-port=${port}`,
+  "--headless=new", "--hide-scrollbars", "--mute-audio", "--allow-file-access-from-files", "--autoplay-policy=no-user-gesture-required", `--remote-debugging-port=${port}`,
   `--user-data-dir=${mkdtempSync(join(tmpdir(), "ct-"))}`, `--window-size=${width},${height}`, "about:blank",
 ], { stdio: "ignore" });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
